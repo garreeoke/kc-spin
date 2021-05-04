@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: kc-spin
+  namespace: kc-spin
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: kc-spin.work.garreeoke.io
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          serviceName: kc-spin
+          servicePort: 8080

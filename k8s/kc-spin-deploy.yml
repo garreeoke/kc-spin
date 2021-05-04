@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: kc-spin
+  name: kc-spin
+  namespace: kc-spin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kc-spin
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: kc-spin
+    spec:
+      affinity: {}
+      containers:
+        - name: kc-spin
+          image: garreeoke/kc-spin
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              name: http-port
+              protocol: TCP
+          resources: {}
+          securityContext:
+            capabilities: {}
+            privileged: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
